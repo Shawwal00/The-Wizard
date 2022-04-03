@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     private Animator anim;
+    private AudioSource walkOutside;
+    private AudioSource jumpClip;
 
     private float dirX = 0f;
     [SerializeField]private float moveSpeed = 7f;
@@ -20,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        walkOutside = GetComponent<AudioSource>();
+        jumpClip = GameObject.Find("Jump").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -28,10 +32,23 @@ public class PlayerMovement : MonoBehaviour
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
 
+
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A))
+        {
+            walkOutside.Play();
+        }
+
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) //Need to add for Jumping
+        {
+            walkOutside.Stop();
+        }
+
         if (Input.GetButtonDown("Jump"))
         {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
+            jumpClip.Play();
         }
+
 
         UpdateAnimationState();
     }
@@ -65,5 +82,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         anim.SetInteger("state", (int)state);
+    }
+
+    void OnCollison2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Potion"))
+        {
+            Destroy(other.gameObject);
+        }
+        
     }
 }
