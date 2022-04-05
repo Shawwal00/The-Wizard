@@ -1073,7 +1073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3001303dd6537f04c96573d20dab3639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstlevel: Hub World
+  firstlevel: 
 --- !u!1 &1998549569
 GameObject:
   m_ObjectHideFlags: 0
