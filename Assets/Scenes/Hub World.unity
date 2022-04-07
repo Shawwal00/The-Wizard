@@ -2470,8 +2470,8 @@ MonoBehaviour:
   CameraMode: 0
   MovementSmoothing: 1
   RotationSmoothing: 0
-  MovementSmoothingValue: 25
-  RotationSmoothingValue: 5
+  MovementSmoothingValue: 0
+  RotationSmoothingValue: 0
   MoveSensitivity: 2
 --- !u!1 &1735363496
 GameObject:
