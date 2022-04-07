@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetInteger("state", (int)state);
     }
 
-    void OnCollison2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Potion"))
         {
