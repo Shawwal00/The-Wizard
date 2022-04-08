@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
         instance = this;
         SceneManager.LoadSceneAsync((int)SceneIndexes.MAIN_MENU, LoadSceneMode.Additive);
     }
-    // Update is called once per frame
     public void LoadGame()
     {
         loadingScreen.SetActive(true);
