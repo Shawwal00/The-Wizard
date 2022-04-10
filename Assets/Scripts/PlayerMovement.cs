@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private float dirX = 0f;
     [SerializeField]private float moveSpeed = 7f;
     [SerializeField]private float jumpForce = 10f;
+    int jumpUsed = 0;
+    float jumpCooldown = 0f;
 
     private enum MovementState { idle, running, jumping, falling }
 
@@ -31,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     {
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
-
+        jumpCooldown += Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A))
         {
@@ -45,10 +47,20 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
-            jumpClip.Play();
+            if (jumpUsed < 2)
+            {
+                jumpCooldown = 0f;
+                rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
+                jumpClip.Play();
+                jumpUsed++;
+            }
         }
 
+        if (jumpCooldown > 2f)
+        {
+            jumpCooldown = 0f;
+            jumpUsed = 0;
+        }
 
         UpdateAnimationState();
     }
