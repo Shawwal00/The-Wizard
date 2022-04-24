@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (jumpCooldown > 2f)
+        if (jumpCooldown > 1f)
         {
             jumpCooldown = 0f;
             jumpUsed = 0;
