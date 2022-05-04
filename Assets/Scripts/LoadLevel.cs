@@ -21,7 +21,7 @@ public class LoadLevel : MonoBehaviour
         {
             soundSource.PlayOneShot(portalSound);
             Debug.Log("Level Load Trigger"); 
-            SceneManager.LoadScene(4); 
+            SceneManager.LoadScene(5); 
         }
     } 
 
