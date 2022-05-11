@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]private float jumpForce = 10f;
     int jumpUsed = 0;
     float jumpCooldown = 0f;
+    private bool doubleJump = false;
 
     private enum MovementState { idle, running, jumping, falling }
 
@@ -47,16 +48,29 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump"))
         {
-            if (jumpUsed < 2)
+            if (doubleJump)
             {
-                jumpCooldown = 0f;
-                rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
-                jumpClip.Play();
-                jumpUsed++;
+                if (jumpUsed < 2)
+                {
+                    jumpCooldown = 0f;
+                    rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
+                    jumpClip.Play();
+                    jumpUsed++;
+                }
+            }
+            else
+            {
+                if (jumpUsed < 1)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, jumpForce, 0);
+                    jumpClip.Play();
+                    jumpCooldown = 0f;
+                    jumpUsed++;
+                }
             }
         }
 
-        if (jumpCooldown > 1f)
+        if (jumpCooldown > 0.8f)
         {
             jumpCooldown = 0f;
             jumpUsed = 0;
@@ -101,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Potion"))
         {
             Destroy(other.gameObject);
+            doubleJump = true;
         }
 
     }
